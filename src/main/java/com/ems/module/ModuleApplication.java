@@ -1,0 +1,70 @@
+package com.ems.module;
+
+import com.ems.module.Domain.Employee;
+import com.ems.module.repository.EmployeeRepoository;
+import com.ems.module.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@SpringBootApplication
+public class ModuleApplication implements CommandLineRunner {
+@Autowired
+ private EmployeeService employeeService;
+	public static void main(String[] args) {
+		SpringApplication.run(ModuleApplication.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		// save employee
+		Employee employee = new Employee();
+		employee.setFirstName("John");
+		employee.setLastName("Doe");
+		employee.setSalary(1000.0);
+		Employee employee1 = new Employee();
+		employee1.setFirstName("Robert");
+		employee1.setLastName("Luis");
+		employee1.setSalary(900.0);
+			Employee employee2 = new Employee();
+			employee2.setFirstName("Job");
+			employee2.setLastName("Doe");
+			employee2.setSalary(1100.0);
+			Employee employee3 = new Employee();
+			employee3.setFirstName("Emily");
+			employee3.setLastName("Doe");
+			employee3.setSalary(600.0);
+		System.out.println("=====================================");
+		System.out.println("Save Employee");
+		System.out.println(employeeService.saveEmployee(employee));
+		System.out.println(employeeService.saveEmployee(employee1));
+		System.out.println(employeeService.saveEmployee(employee2));
+		System.out.println(employeeService.saveEmployee(employee3));
+		System.out.println("=====================================");
+		// fetch employee by id
+		System.out.println("Employee fetched by Id 1");
+		System.out.println(employeeService.fetchEmployeeById(1L));
+		System.out.println("=====================================");
+		// update employee
+		System.out.println("Emlpoyee updated by Id 1");
+		employee.setFirstName("Jane");
+		System.out.println(employeeService.updateEmployee(1L, employee));
+		 System.out.println("=====================================");
+		 System.out.println("Delete Employee by Id 1 ");
+//		 delete employee
+		employeeService.deleteEmployee(1L);
+		System.out.println("=====================================");
+		// fetch all employees
+		System.out.println("List of Employees");
+		List<Employee> employees = employeeService.fetchAllEmployees();
+		 employees.sort((e1, e2) -> e1.getSalary().compareTo(e2.getSalary()));
+		employees.forEach(System.out::println);
+		System.out.println("=====================================");
+
+
+	}
+}
